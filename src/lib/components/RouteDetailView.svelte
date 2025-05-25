@@ -69,137 +69,37 @@
 	}
 </script>
 
-<div class="route-detail-container">
+<div class="h-screen flex flex-col">
 	<!-- Header with route info -->
-	<div class="route-header">
-		<button class="back-button" on:click={goBack}>
+	<div class="bg-white p-5 shadow-md z-[100] sm:p-4">
+		<button class="bg-transparent border-none text-blue-500 text-base cursor-pointer mb-4 p-1 hover:underline" on:click={goBack}>
 			← Back to Routes
 		</button>
 		
-		<div class="route-info">
-			<h1 class="route-title">{route.name}</h1>
-			<p class="route-date">{new Date(route.date).toLocaleDateString()}</p>
-			<p class="route-time">{route.startTime} - {route.endTime}</p>
+		<div class="mb-5">
+			<h1 class="text-2xl font-bold m-0 mb-1 text-gray-800">{route.name}</h1>
+			<p class="text-base text-gray-500 m-0">{new Date(route.date).toLocaleDateString()}</p>
+			<p class="text-sm text-gray-400 mt-1 mb-0">{route.startTime} - {route.endTime}</p>
 		</div>
 		
-		<div class="route-stats">
-			<div class="stat">
-				<span class="stat-value">{formatDistance(route.distance)}</span>
-				<span class="stat-label">Distance</span>
+		<div class="flex gap-8 sm:gap-5">
+			<div class="flex flex-col items-center">
+				<span class="text-xl font-bold text-gray-800 sm:text-lg">{formatDistance(route.distance)}</span>
+				<span class="text-xs text-gray-500 mt-1">Distance</span>
 			</div>
-			<div class="stat">
-				<span class="stat-value">{formatTime(route.duration)}</span>
-				<span class="stat-label">Duration</span>
+			<div class="flex flex-col items-center">
+				<span class="text-xl font-bold text-gray-800 sm:text-lg">{formatTime(route.duration)}</span>
+				<span class="text-xs text-gray-500 mt-1">Duration</span>
 			</div>
-			<div class="stat">
-				<span class="stat-value">{route.avgSpeed.toFixed(1)} km/h</span>
-				<span class="stat-label">Avg Speed</span>
+			<div class="flex flex-col items-center">
+				<span class="text-xl font-bold text-gray-800 sm:text-lg">{route.avgSpeed.toFixed(1)} km/h</span>
+				<span class="text-xs text-gray-500 mt-1">Avg Speed</span>
 			</div>
 		</div>
 	</div>
 	
 	<!-- Map -->
-	<div class="map-container">
-		<div id="route-detail-map" bind:this={mapElement}></div>
+	<div class="flex-1 relative">
+		<div bind:this={mapElement} class="w-full h-full"></div>
 	</div>
 </div>
-
-<style>
-	.route-detail-container {
-		height: 100vh;
-		display: flex;
-		flex-direction: column;
-	}
-	
-	.route-header {
-		background: white;
-		padding: 20px;
-		box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-		z-index: 100;
-	}
-	
-	.back-button {
-		background: none;
-		border: none;
-		color: #3B82F6;
-		font-size: 16px;
-		cursor: pointer;
-		margin-bottom: 15px;
-		padding: 5px 0;
-	}
-	
-	.back-button:hover {
-		text-decoration: underline;
-	}
-	
-	.route-info {
-		margin-bottom: 20px;
-	}
-	
-	.route-title {
-		font-size: 24px;
-		font-weight: 700;
-		margin: 0 0 5px 0;
-		color: #1F2937;
-	}
-	
-	.route-date {
-		font-size: 16px;
-		color: #6B7280;
-		margin: 0;
-	}
-	
-	.route-time {
-		font-size: 14px;
-		color: #9CA3AF;
-		margin: 5px 0 0 0;
-	}
-	
-	.route-stats {
-		display: flex;
-		gap: 30px;
-	}
-	
-	.stat {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-	
-	.stat-value {
-		font-size: 20px;
-		font-weight: 700;
-		color: #1F2937;
-	}
-	
-	.stat-label {
-		font-size: 12px;
-		color: #6B7280;
-		margin-top: 4px;
-	}
-	
-	.map-container {
-		flex: 1;
-		position: relative;
-	}
-	
-	#route-detail-map {
-		width: 100%;
-		height: 100%;
-	}
-	
-	@media (max-width: 640px) {
-		.route-header {
-			padding: 15px;
-		}
-		
-		.route-stats {
-			gap: 20px;
-		}
-		
-		.stat-value {
-			font-size: 18px;
-		}
-	}
-</style>
-

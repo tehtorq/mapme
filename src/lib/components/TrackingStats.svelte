@@ -7,62 +7,22 @@
 	export let avgSpeed = 0;
 </script>
 
-<div class="stats">
-	<div class="stat-item">
-		<span class="stat-label">Time:</span>
-		<span class="stat-value">{formatTime(elapsedTime)}</span>
+<div class="absolute top-2.5 left-2.5 bg-white/95 p-4 rounded-xl shadow-md z-[400] min-w-[200px] sm:top-[60px] sm:left-2.5 sm:right-2.5 sm:min-w-0">
+	<div class="flex justify-between my-1.5 text-sm">
+		<span class="font-semibold text-gray-500">Time:</span>
+		<span class="font-bold text-gray-800">{formatTime(elapsedTime)}</span>
 	</div>
-	<div class="stat-item">
-		<span class="stat-label">Distance:</span>
-		<span class="stat-value">{formatDistance(distance)}</span>
+	<div class="flex justify-between my-1.5 text-sm">
+		<span class="font-semibold text-gray-500">Distance:</span>
+		<span class="font-bold text-gray-800">{formatDistance(distance)}</span>
 	</div>
-	<div class="stat-item">
-		<span class="stat-label">Current Speed:</span>
-		<span class="stat-value">{currentSpeed.toFixed(1)} km/h</span>
+	<div class="flex justify-between my-1.5 text-sm">
+		<span class="font-semibold text-gray-500">Current Speed:</span>
+		<span class="font-bold text-gray-800">{currentSpeed.toFixed(1)} km/h</span>
 	</div>
-	<div class="stat-item">
-		<span class="stat-label">Avg Speed:</span>
-		<span class="stat-value">{avgSpeed.toFixed(1)} km/h</span>
+	<div class="flex justify-between my-1.5 text-sm">
+		<span class="font-semibold text-gray-500">Avg Speed:</span>
+		<span class="font-bold text-gray-800">{avgSpeed.toFixed(1)} km/h</span>
 	</div>
 </div>
-
-<style>
-	.stats {
-		position: absolute;
-		top: 10px;
-		left: 10px;
-		background: rgba(255, 255, 255, 0.95);
-		padding: 15px;
-		border-radius: 12px;
-		box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-		z-index: 400;
-		min-width: 200px;
-	}
-	
-	.stat-item {
-		display: flex;
-		justify-content: space-between;
-		margin: 5px 0;
-		font-size: 14px;
-	}
-	
-	.stat-label {
-		font-weight: 600;
-		color: #6B7280;
-	}
-	
-	.stat-value {
-		font-weight: 700;
-		color: #1F2937;
-	}
-	
-	@media (max-width: 640px) {
-		.stats {
-			top: 60px;
-			left: 10px;
-			right: 10px;
-			min-width: auto;
-		}
-	}
-</style>
 

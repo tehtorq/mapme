@@ -280,30 +280,32 @@
 	}
 </script>
 
-<div class="map-container">
-	<div id="map" bind:this={mapElement}></div>
+<div class="w-full h-full relative">
+	<div id="map" bind:this={mapElement} class="w-full h-full"></div>
 	
 	{#if tracking}
 		<TrackingStats {elapsedTime} {distance} {currentSpeed} {avgSpeed} />
 	{/if}
 	
-	<div class="map-controls">
+	<div class="absolute top-2.5 right-[60px] flex flex-col gap-2.5 z-[400]">
 		<button 
-			class="map-control {autoCenter ? 'active' : ''}" 
+			class="border-none w-10 h-10 rounded-lg cursor-pointer shadow-md flex items-center justify-center transition-all duration-200 hover:scale-105 {autoCenter ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-white text-gray-700 hover:bg-gray-100'}" 
 			on:click={toggleAutoCenter}
-			title="Auto-center">
-			📍
+			title="{autoCenter ? 'Disable' : 'Enable'} location following">
+			<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+				<path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+			</svg>
 		</button>
 	</div>
 	
-	<div class="map-styles">
+	<div class="absolute bottom-20 right-2.5 flex gap-1.5 z-[400] bg-white/90 p-1.5 rounded-lg">
 		<button 
-			class="style-button {mapStyle === 'street' ? 'active' : ''}"
+			class="px-3 py-2 border-none rounded-md cursor-pointer text-xs transition-all duration-200 {mapStyle === 'street' ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-white hover:bg-gray-100'}"
 			on:click={() => changeMapStyle('street')}>
 			Street
 		</button>
 		<button 
-			class="style-button {mapStyle === 'satellite' ? 'active' : ''}"
+			class="px-3 py-2 border-none rounded-md cursor-pointer text-xs transition-all duration-200 {mapStyle === 'satellite' ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-white hover:bg-gray-100'}"
 			on:click={() => changeMapStyle('satellite')}>
 			Satellite
 		</button>
@@ -317,89 +319,4 @@
 		onStop={stopTracking}
 	/>
 </div>
-
-<style>
-	.map-container {
-		width: 100%;
-		height: 100%;
-		position: relative;
-	}
-	
-	#map {
-		width: 100%;
-		height: 100%;
-	}
-	
-	.map-controls {
-		position: absolute;
-		top: 10px;
-		right: 60px;
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		z-index: 400;
-	}
-	
-	.map-control {
-		background: white;
-		border: none;
-		width: 40px;
-		height: 40px;
-		border-radius: 8px;
-		cursor: pointer;
-		box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 20px;
-		transition: all 0.2s;
-	}
-	
-	.map-control:hover {
-		background: #F3F4F6;
-		transform: scale(1.05);
-	}
-	
-	.map-control.active {
-		background: #3B82F6;
-		color: white;
-	}
-	
-	.map-styles {
-		position: absolute;
-		bottom: 80px;
-		right: 10px;
-		display: flex;
-		gap: 5px;
-		z-index: 400;
-		background: rgba(255, 255, 255, 0.9);
-		padding: 5px;
-		border-radius: 8px;
-	}
-	
-	.style-button {
-		padding: 8px 12px;
-		border: none;
-		background: white;
-		border-radius: 6px;
-		cursor: pointer;
-		font-size: 12px;
-		transition: all 0.2s;
-	}
-	
-	.style-button:hover { 
-		background: #F3F4F6; 
-	}
-	
-	.style-button.active { 
-		background: #3B82F6; 
-		color: white; 
-	}
-	
-	@media (max-width: 640px) {
-		.map-styles {
-			bottom: 70px;
-		}
-	}
-</style>
 

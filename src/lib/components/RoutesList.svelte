@@ -32,14 +32,14 @@
 	}
 </script>
 
-<div class="history-container">
-	<div class="history-header">
-		<h1 class="history-title">Your Routes</h1>
+<div class="h-full overflow-y-auto bg-gray-100 relative">
+	<div class="bg-white p-5 shadow-lg sticky top-0 z-[500]">
+		<h1 class="text-2xl font-bold m-0">Your Routes</h1>
 	</div>
 	
-	<div class="route-list">
+	<div class="p-4 flex flex-col gap-4 pb-24">
 		{#if routes.length === 0}
-			<div class="empty-state">
+			<div class="text-center py-16 px-5 text-gray-500">
 				<p>No routes recorded yet.</p>
 				<p>Tap the map tab to start tracking!</p>
 			</div>
@@ -55,41 +55,3 @@
 		{/if}
 	</div>
 </div>
-
-<style>
-	.history-container {
-		height: 100%;
-		overflow-y: auto;
-		background: #F3F4F6;
-	}
-	
-	.history-header {
-		background: white;
-		padding: 20px;
-		box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-		position: sticky;
-		top: 0;
-		z-index: 100;
-	}
-	
-	.history-title {
-		font-size: 24px;
-		font-weight: 700;
-		margin: 0;
-	}
-	
-	.route-list {
-		padding: 15px;
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
-		padding-bottom: 100px;
-	}
-	
-	.empty-state {
-		text-align: center;
-		padding: 60px 20px;
-		color: #6B7280;
-	}
-</style>
-

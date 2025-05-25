@@ -75,8 +75,8 @@
 	}
 </script>
 
-<div class="app-container">
-	<div class="view-container">
+<div class="w-screen h-screen overflow-hidden relative flex flex-col">
+	<div class="flex-1 relative overflow-hidden">
 		{#if $appState === 'idle' || $appState === 'tracking'}
 			<Map 
 				bind:this={mapComponent}
@@ -95,21 +95,4 @@
 	
 	<TabBar />
 </div>
-
-<style>
-	.app-container {
-		width: 100vw;
-		height: 100vh;
-		overflow: hidden;
-		position: relative;
-		display: flex;
-		flex-direction: column;
-	}
-	
-	.view-container {
-		flex: 1;
-		position: relative;
-		overflow: hidden;
-	}
-</style>
 
