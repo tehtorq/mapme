@@ -6,7 +6,7 @@
 	export let onStop = () => {};
 </script>
 
-<div class="absolute bottom-5 left-5 flex gap-2.5 z-[400]">
+<div class="fixed bottom-0 left-0 p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] flex gap-2.5 z-[400]">
 	{#if !tracking}
 		<button class="px-7 py-3.5 border-none rounded-full text-base font-semibold cursor-pointer transition-all duration-300 shadow-lg text-white flex items-center gap-2 bg-green-500 hover:bg-green-600" on:click={onStart}>
 			Start Tracking
