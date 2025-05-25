@@ -6,7 +6,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "NODE_OPTIONS=\"\" npm run build && gh-pages -d build"
+    "deploy": "NODE_OPTIONS=\"\" npm run build && gh-pages -d build --dotfiles"
   },
   "type": "module",
   "keywords": [],
