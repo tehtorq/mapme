@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/mapme/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="manifest" href="/mapme/manifest.json" />
+		<meta name="theme-color" content="#3B82F6" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+		<meta name="apple-mobile-web-app-title" content="MapMe" />
+		
+		<link rel="modulepreload" href="/mapme/_app/immutable/entry/start.Cw8Ct2Fw.js">
+		<link rel="modulepreload" href="/mapme/_app/immutable/chunks/Bf5F-_lY.js">
+		<link rel="modulepreload" href="/mapme/_app/immutable/chunks/BEHf9mPD.js">
+		<link rel="modulepreload" href="/mapme/_app/immutable/chunks/DuUd9pFA.js">
+		<link rel="modulepreload" href="/mapme/_app/immutable/entry/app.DkQgBuPg.js">
+		<link rel="modulepreload" href="/mapme/_app/immutable/chunks/B_j6-B1u.js">
+		<link rel="modulepreload" href="/mapme/_app/immutable/chunks/CEGtxuwx.js">
+		<link rel="modulepreload" href="/mapme/_app/immutable/chunks/DTwATy8O.js">
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">
+			<script>
+				{
+					__sveltekit_15s98ds = {
+						base: "/mapme",
+						assets: "/mapme"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/mapme/_app/immutable/entry/start.Cw8Ct2Fw.js"),
+						import("/mapme/_app/immutable/entry/app.DkQgBuPg.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('/mapme/service-worker.js');
+						});
+					}
+				}
+			</script>
+		</div>
+	</body>
+</html>
