@@ -32,6 +32,9 @@
 	let currentSpeed = 0;
 	let avgSpeed = 0;
 	let timer = null;
+	let wakeLock = null;
+	let notification = null;
+	let notificationTimeout = null;
 	
 	const mapStyles = {
 		street: {
@@ -96,7 +99,34 @@
 		}
 	});
 	
+	// Handle page visibility changes to re-acquire wake lock
+	function handleVisibilityChange() {
+		if (!document.hidden && tracking && !wakeLock) {
+			// Re-acquire wake lock when page becomes visible
+			if ('wakeLock' in navigator) {
+				navigator.wakeLock.request('screen').then(lock => {
+					wakeLock = lock;
+					wakeLock.addEventListener('release', () => {
+						console.log('Wake Lock was released');
+					});
+					console.log('Wake Lock re-acquired');
+				}).catch(err => {
+					console.error('Failed to re-acquire wake lock:', err);
+				});
+			}
+		}
+	}
+	
+	onMount(() => {
+		document.addEventListener('visibilitychange', handleVisibilityChange);
+	});
+	
 	onDestroy(() => {
+		document.removeEventListener('visibilitychange', handleVisibilityChange);
+		
+		if (wakeLock !== null) {
+			wakeLock.release().catch(() => {});
+		}
 		if (watchId !== null) {
 			navigator.geolocation.clearWatch(watchId);
 		}
@@ -157,10 +187,25 @@
 		}
 	}
 	
-	function startTracking() {
+	async function startTracking() {
 		if (!navigator.geolocation) {
 			alert('Geolocation is not supported by your browser');
 			return;
+		}
+		
+		// Request wake lock to prevent screen from sleeping
+		if ('wakeLock' in navigator) {
+			try {
+				wakeLock = await navigator.wakeLock.request('screen');
+				wakeLock.addEventListener('release', () => {
+					console.log('Wake Lock was released');
+				});
+				console.log('Wake Lock is active');
+				// Show notification about screen staying on
+				showNotification('Screen will stay on during tracking');
+			} catch (err) {
+				console.error(`${err.name}, ${err.message}`);
+			}
 		}
 		
 		$appState = 'tracking';
@@ -253,10 +298,21 @@
 		}
 	}
 	
-	function stopTracking() {
+	async function stopTracking() {
 		$appState = 'idle';
 		tracking = false;
 		paused = false;
+		
+		// Release wake lock
+		if (wakeLock !== null) {
+			try {
+				await wakeLock.release();
+				wakeLock = null;
+				console.log('Wake Lock released');
+			} catch (err) {
+				console.error('Error releasing wake lock:', err);
+			}
+		}
 		
 		if (watchId !== null) {
 			navigator.geolocation.clearWatch(watchId);
@@ -301,6 +357,17 @@
 	function toggleAutoCenter() {
 		autoCenter = !autoCenter;
 	}
+	
+	function showNotification(message) {
+		notification = message;
+		if (notificationTimeout) {
+			clearTimeout(notificationTimeout);
+		}
+		notificationTimeout = setTimeout(() => {
+			notification = null;
+			notificationTimeout = null;
+		}, 3000);
+	}
 </script>
 
 <div class="w-full h-full relative">
@@ -332,6 +399,12 @@
 		
 		{#if tracking}
 			<TrackingStats {elapsedTime} {distance} {currentSpeed} {avgSpeed} />
+		{/if}
+		
+		{#if notification}
+			<div class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-black/80 text-white px-4 py-2 rounded-lg shadow-lg z-[500] animate-fadeIn">
+				{notification}
+			</div>
 		{/if}
 		
 		<div class="absolute top-2.5 right-[60px] flex flex-col gap-2.5 z-[400]">
