@@ -2,17 +2,17 @@
 	"name": "MapMe - Route Tracker",
 	"short_name": "MapMe",
 	"description": "Track your walking routes with ease",
-	"start_url": "/mapme/",
-	"scope": "/mapme/",
+	"start_url": "./",
+	"scope": "./",
 	"display": "standalone",
 	"orientation": "portrait",
 	"background_color": "#ffffff",
 	"theme_color": "#3B82F6",
 	"categories": ["navigation", "travel", "fitness"],
-	"id": "mapme-route-tracker-v2",
+	"id": "mapme-route-tracker-v3",
 	"icons": [
 		{
-			"src": "/mapme/favicon.png",
+			"src": "./favicon.png",
 			"sizes": "512x512",
 			"type": "image/png",
 			"purpose": "any maskable"
