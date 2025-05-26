@@ -2,8 +2,8 @@
 	"name": "MapMe - Route Tracker",
 	"short_name": "MapMe",
 	"description": "Track your walking routes with ease",
-	"start_url": "/",
-	"scope": "/",
+	"start_url": "/mapme/",
+	"scope": "/mapme/",
 	"display": "standalone",
 	"orientation": "portrait",
 	"background_color": "#ffffff",
@@ -11,7 +11,7 @@
 	"categories": ["navigation", "travel", "fitness"],
 	"icons": [
 		{
-			"src": "/favicon.png",
+			"src": "/mapme/favicon.png",
 			"sizes": "512x512",
 			"type": "image/png",
 			"purpose": "any maskable"
