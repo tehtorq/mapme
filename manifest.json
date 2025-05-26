@@ -3,7 +3,9 @@
 	"short_name": "MapMe",
 	"description": "Track your walking routes with ease",
 	"start_url": "/",
+	"scope": "/",
 	"display": "standalone",
+	"orientation": "portrait",
 	"background_color": "#ffffff",
 	"theme_color": "#3B82F6",
 	"icons": [
