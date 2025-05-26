@@ -1,6 +1,7 @@
 import { build, files, version } from '$service-worker';
 
 const CACHE = `cache-${version}`;
+const RUNTIME_CACHE = 'runtime-cache';
 
 const ASSETS = [
 	...build,
@@ -19,16 +20,18 @@ self.addEventListener('install', (event) => {
 	}
 
 	event.waitUntil(addFilesToCache());
+	self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
 	async function deleteOldCaches() {
 		for (const key of await caches.keys()) {
-			if (key !== CACHE) await caches.delete(key);
+			if (key !== CACHE && key !== RUNTIME_CACHE) await caches.delete(key);
 		}
 	}
 
 	event.waitUntil(deleteOldCaches());
+	self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
@@ -40,32 +43,57 @@ self.addEventListener('fetch', (event) => {
 
 		// Serve build files from cache
 		if (ASSETS.includes(url.pathname)) {
-			return cache.match(url.pathname);
+			const match = await cache.match(url.pathname);
+			if (match) return match;
 		}
 
-		// Try cache first, then network for other requests
-		const cachedResponse = await cache.match(event.request);
+		// Try the network first for API requests
+		if (url.pathname.startsWith('/api/')) {
+			try {
+				const response = await fetch(event.request);
+				return response;
+			} catch {
+				// Offline - return a custom response
+				return new Response(JSON.stringify({ error: 'Offline' }), {
+					status: 503,
+					headers: { 'Content-Type': 'application/json' }
+				});
+			}
+		}
+
+		// For everything else, try cache first, then network
+		const cachedResponse = await caches.match(event.request);
 		if (cachedResponse) {
 			return cachedResponse;
 		}
 
 		try {
 			const response = await fetch(event.request);
+			const runtimeCache = await caches.open(RUNTIME_CACHE);
 			
-			// Cache successful responses for tiles
-			if (response.ok && url.hostname.includes('tile')) {
-				cache.put(event.request, response.clone());
+			// Cache successful responses for tiles and other resources
+			if (response.ok && (url.hostname.includes('tile') || url.hostname.includes('openstreetmap'))) {
+				runtimeCache.put(event.request, response.clone());
 			}
 			
 			return response;
 		} catch {
-			// Return cached version if available
-			const cachedResponse = await cache.match(event.request);
-			if (cachedResponse) {
-				return cachedResponse;
+			// Offline fallback
+			if (event.request.destination === 'document') {
+				return cache.match('/');
 			}
+			
+			// Return a 503 Service Unavailable for other requests
+			return new Response('Service Unavailable', { status: 503 });
 		}
 	}
 
 	event.respondWith(respond());
+});
+
+// Listen for messages from the app
+self.addEventListener('message', (event) => {
+	if (event.data && event.data.type === 'SKIP_WAITING') {
+		self.skipWaiting();
+	}
 });

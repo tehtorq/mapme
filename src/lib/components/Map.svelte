@@ -338,7 +338,8 @@
 			<button 
 				class="border-none w-10 h-10 rounded-lg cursor-pointer shadow-md flex items-center justify-center transition-all duration-200 hover:scale-105 {autoCenter ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-white text-gray-700 hover:bg-gray-100'}" 
 				on:click={toggleAutoCenter}
-				title="{autoCenter ? 'Disable' : 'Enable'} location following">
+				title="{autoCenter ? 'Disable' : 'Enable'} location following"
+				aria-label="{autoCenter ? 'Disable' : 'Enable'} location following">
 				<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
 					<path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
 				</svg>
