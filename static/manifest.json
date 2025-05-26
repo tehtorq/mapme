@@ -8,11 +8,9 @@
 	"orientation": "portrait",
 	"background_color": "#ffffff",
 	"theme_color": "#3B82F6",
-	"categories": ["navigation", "travel", "fitness"],
-	"id": "mapme-route-tracker-v2",
 	"icons": [
 		{
-			"src": "/mapme/favicon.png",
+			"src": "/favicon.png",
 			"sizes": "512x512",
 			"type": "image/png",
 			"purpose": "any maskable"
